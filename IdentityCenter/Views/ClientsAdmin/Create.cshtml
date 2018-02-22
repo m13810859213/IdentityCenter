@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Clients</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label class="control-label">ClientId</label>
+                <input name="ClientId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">ClientName</label>
+                <input name="ClientName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">ClientSecret</label>
+                <input type="password" name="ClientSecret" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">AllowedScopes</label>
+                <input name="AllowedScopes" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">TokenTime</label>
+                <input name="TokenTime" class="form-control" value="3600" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

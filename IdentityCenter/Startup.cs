@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using IdentityCenter.Data;
 using IdentityCenter.Models;
 using IdentityCenter.Services;
+using System.Reflection;
+using IdentityServer4.EntityFramework.DbContexts;
 
 namespace IdentityCenter
 {
@@ -26,8 +28,15 @@ namespace IdentityCenter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionString));
+
+            //配置IdentityServer4数据库
+            services.AddDbContext<ConfigurationDbContext>(options =>
+                options.UseNpgsql(connectionString));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -37,6 +46,30 @@ namespace IdentityCenter
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
+            // configure identity server with in-memory stores, keys, clients and scopes
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                //.AddTestUsers(Config.GetUsers())
+                // this adds the config data from DB (clients, resources)
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseNpgsql(connectionString,
+                            sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                // this adds the operational data from DB (codes, tokens, consents)
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseNpgsql(connectionString,
+                            sql => sql.MigrationsAssembly(migrationsAssembly));
+
+                    // this enables automatic token cleanup. this is optional.
+                    options.EnableTokenCleanup = true;
+                    options.TokenCleanupInterval = 30;
+                })
+                 .AddAspNetIdentity<ApplicationUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +88,8 @@ namespace IdentityCenter
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

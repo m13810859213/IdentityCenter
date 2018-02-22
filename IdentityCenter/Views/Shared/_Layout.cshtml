@@ -34,10 +34,11 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if (User != null && User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
-                    }
+    {
+                <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
+                <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+                <li>@Html.ActionLink("ClientsAdmin", "Index", "ClientsAdmin")</li>
+}
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
