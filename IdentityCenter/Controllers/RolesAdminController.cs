@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IdentityCenter.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
