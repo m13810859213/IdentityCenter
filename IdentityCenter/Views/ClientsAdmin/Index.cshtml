@@ -18,10 +18,13 @@
                 @Html.DisplayNameFor(model => model.ClientName)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.ClientUri)
+                @Html.DisplayNameFor(model => model.AllowedGrantTypes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AllowedScopes)
+                @Html.DisplayNameFor(model => model.RedirectUris)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostLogoutRedirectUris)
             </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.AccessTokenLifetime)
@@ -42,10 +45,13 @@
                 @Html.DisplayFor(modelItem => item.ClientName)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.ClientUri)
+                @Html.DisplayFor(modelItem => item.AllowedGrantTypes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AllowedScopes)
+                @Html.DisplayFor(modelItem => item.RedirectUris)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostLogoutRedirectUris)
             </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.AccessTokenLifetime)

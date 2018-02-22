@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace IdentityCenter
+namespace MvcClient
 {
     public class Program
     {
@@ -21,13 +20,6 @@ namespace IdentityCenter
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                //.UseKestrel(options => {
-                //    options.Listen(IPAddress.Any, 5000);
-                //    //options.Listen(IPAddress.Any, 443, listenOptions =>
-                //    //{
-                //    //    listenOptions.UseHttps("server.pfx", "test");
-                //    //});
-                //})
                 .Build();
     }
 }
