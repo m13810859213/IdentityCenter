@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace IdentityCenter
+namespace API
 {
     public class Program
     {
@@ -22,7 +22,7 @@ namespace IdentityCenter
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
-                    options.Listen(IPAddress.Any, 5000);
+                    options.Listen(IPAddress.Any, 5001);
                     //options.Listen(IPAddress.Any, 443, listenOptions =>
                     //{
                     //    listenOptions.UseHttps("server.pfx", "test");
