@@ -103,20 +103,17 @@ namespace IdentityCenter.Controllers
                 var client = new Client
                 {
                     ClientId = clientId,
-
-                    // no interactive user, use the clientid/secret for authentication
-                    //AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientName= clientName,
                     // secret for authentication
-                    ClientSecrets =
-                    {
-                        new Secret(secret.Sha256())
-                    },
-                    RedirectUris = { },
-                    PostLogoutRedirectUris = { },
+                    //ClientSecrets =
+                    //{
+                    //    new Secret(secret.Sha256())
+                    //},
+                    //RedirectUris = { },
+                    //PostLogoutRedirectUris = { },
                     AccessTokenLifetime = accessTokenLifetime,//设置过期时间，默认3600秒/1小时
                     // scopes that client has access to
-                    AllowedScopes = { }
+                    //AllowedScopes = { }
                 };
                 if (!string.IsNullOrEmpty(allowedScopes))
                 {
@@ -130,10 +127,15 @@ namespace IdentityCenter.Controllers
                 {
                     client.PostLogoutRedirectUris = postLogoutRedirectUris.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 }
+                List<Secret> secretList = new List<Secret>();
+                List<string> AllowedGrantList = new List<string>();
                 switch (allowedGrantTypes)
                 {
                     case "Implicit":
                         client.AllowedGrantTypes = GrantTypes.Implicit;
+                        AllowedGrantList.Add(IdentityServerConstants.StandardScopes.OpenId);
+                        AllowedGrantList.Add(IdentityServerConstants.StandardScopes.Profile);
+                        client.AllowedScopes = AllowedGrantList.ToArray();
                         break;
                     case "ImplicitAndClientCredentials":
                         client.AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials;
@@ -148,25 +150,30 @@ namespace IdentityCenter.Controllers
                         client.AllowedGrantTypes = GrantTypes.Hybrid;
                         break;
                     case "HybridAndClientCredentials":
-                        List<string> AllowedGrantList = new List<string>();
+                        client.AllowedGrantTypes = GrantTypes.HybridAndClientCredentials;
+                        secretList.Add(new Secret(secret.Sha256()));
+                        client.ClientSecrets = secretList.ToArray();
                         AllowedGrantList.Add(IdentityServerConstants.StandardScopes.OpenId);
                         AllowedGrantList.Add(IdentityServerConstants.StandardScopes.Profile);
                         foreach (var item in client.AllowedScopes)
                         {
                             AllowedGrantList.Add(item);
                         }
-                        client.AllowedGrantTypes = GrantTypes.HybridAndClientCredentials;
                         client.AllowedScopes = AllowedGrantList.ToArray();
                         client.AllowOfflineAccess = true;
                         break;
                     case "ClientCredentials":
                         client.AllowedGrantTypes = GrantTypes.ClientCredentials;
+                        secretList.Add(new Secret(secret.Sha256()));
+                        client.ClientSecrets = secretList.ToArray();
                         break;
                     case "ResourceOwnerPassword":
                         client.AllowedGrantTypes = GrantTypes.ResourceOwnerPassword;
                         break;
                     case "ResourceOwnerPasswordAndClientCredentials":
                         client.AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials;
+                        secretList.Add(new Secret(secret.Sha256()));
+                        client.ClientSecrets = secretList.ToArray();
                         break;
                 }
                 
