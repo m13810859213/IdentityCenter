@@ -35,6 +35,11 @@ namespace MvcClient.Controllers
         {
             return View();
         }
+        [Authorize]
+        public IActionResult Hybrid()
+        {
+            return View();
+        }
 
         public IActionResult Error()
         {
