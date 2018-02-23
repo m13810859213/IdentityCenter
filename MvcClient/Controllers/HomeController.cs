@@ -9,7 +9,7 @@ using MvcClient.Models;
 
 namespace MvcClient.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -28,6 +28,11 @@ namespace MvcClient.Controllers
         {
             ViewData["Message"] = "Your contact page.";
 
+            return View();
+        }
+        [Authorize]
+        public IActionResult Secure()
+        {
             return View();
         }
 
