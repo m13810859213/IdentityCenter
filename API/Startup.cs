@@ -27,13 +27,13 @@ namespace API
             services.AddAuthentication("Bearer")
             .AddIdentityServerAuthentication(options =>
             {
-                options.Authority = "http://localhost:5000";
-                options.RequireHttpsMetadata = false;
+                //options.Authority = "http://localhost:5000";
+                //options.RequireHttpsMetadata = false;
+                //options.ApiName = "api1";
 
-                //options.Authority = "https://localhost";
-                //options.RequireHttpsMetadata = true;
-
-                options.ApiName = "api1";
+                //连接https://demo.identityserver.io/ 验证
+                options.Authority = "https://demo.identityserver.io/";
+                options.ApiName = "api";
             });
         }
 
