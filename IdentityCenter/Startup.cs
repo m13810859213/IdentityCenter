@@ -70,6 +70,25 @@ namespace IdentityCenter
                     options.TokenCleanupInterval = 30;
                 })
                  .AddAspNetIdentity<ApplicationUser>();
+
+            //services.AddAuthentication()
+            //   .AddJwtBearer(jwt =>
+            //   {
+            //       jwt.Authority = "http://localhost:5000";
+            //       jwt.RequireHttpsMetadata = false;
+            //       jwt.Audience = "api1";
+            //   });
+            services.AddAuthentication("Bearer")
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+
+                //options.Authority = "https://localhost";
+                //options.RequireHttpsMetadata = true;
+
+                options.ApiName = "api1";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
