@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -22,11 +23,12 @@ namespace API
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
-                    options.Listen(IPAddress.Any, 5001);
-                    //options.Listen(IPAddress.Any, 443, listenOptions =>
-                    //{
-                    //    listenOptions.UseHttps("server.pfx", "test");
-                    //});
+                    //options.Listen(IPAddress.Any, 5001);
+                    options.Listen(IPAddress.Any, 443, listenOptions =>
+                    {
+                        
+                        listenOptions.UseHttps("server.pem");
+                    });
                 })
                 .Build();
     }

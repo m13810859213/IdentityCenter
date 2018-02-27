@@ -11,15 +11,15 @@ namespace IdentityCenter.API
     [Produces("application/json")]
     [Route("api/Identity")]
     //[Authorize]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    
     public class IdentityController : Controller
     {
         // GET: api/Identity
         [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult Get()
         {
-            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToArray();
-            return Ok(new { message = "Hello API", claims });
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
         }
 
         // GET: api/Identity/5

@@ -23,11 +23,18 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            var appSettings = Configuration.GetSection("AppSettings");
+            string idCenterUrl = "http://localhost:5000";
+            if (appSettings != null)
+            {
+                idCenterUrl = appSettings.GetSection("IDCenterUrl").Value;
+            }
             services.AddMvc();
             services.AddAuthentication("Bearer")
             .AddIdentityServerAuthentication(options =>
             {
-                //options.Authority = "http://localhost:5000";
+                //options.Authority = idCenterUrl;
                 //options.RequireHttpsMetadata = false;
                 //options.ApiName = "api1";
 
@@ -44,6 +51,7 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+            
             app.UseAuthentication();
             app.UseMvc();
         }
