@@ -23,7 +23,7 @@ namespace MvcClient
                 .UseStartup<Startup>()
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Any, 5002);
+                    options.Listen(IPAddress.Any, 5001);
                 })
                 .Build();
     }

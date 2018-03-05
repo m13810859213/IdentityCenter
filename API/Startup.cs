@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Butterfly.Client.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +42,12 @@ namespace API
                 //连接https://demo.identityserver.io/ 验证
                 options.Authority = "https://demo.identityserver.io/";
                 options.ApiName = "api";
+            });
+
+            services.AddButterfly(option =>
+            {
+                option.CollectorUrl = "http://localhost:9618";
+                option.Service = "my service";
             });
         }
 

@@ -23,12 +23,12 @@ namespace API
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
-                    //options.Listen(IPAddress.Any, 5001);
-                    options.Listen(IPAddress.Any, 443, listenOptions =>
-                    {
-                        
-                        listenOptions.UseHttps("server.pem");
-                    });
+                    options.Listen(IPAddress.Any, 5002);
+                    //options.Listen(IPAddress.Any, 443, listenOptions =>
+                    //{
+
+                    //    listenOptions.UseHttps("server.pem");
+                    //});
                 })
                 .Build();
     }

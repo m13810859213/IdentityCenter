@@ -74,7 +74,7 @@ namespace IdentityCenter
             services.AddAuthentication()
                .AddJwtBearer(jwt =>
                {
-                   jwt.Authority = "http://localhost:5000";
+                   jwt.Authority = "http://10.202.203.29:5000";
                    jwt.RequireHttpsMetadata = false;
                    jwt.Audience = "api1";
                });
