@@ -169,6 +169,8 @@ namespace IdentityCenter.Controllers
                         break;
                     case "ResourceOwnerPassword":
                         client.AllowedGrantTypes = GrantTypes.ResourceOwnerPassword;
+                        secretList.Add(new Secret(secret.Sha256()));
+                        client.ClientSecrets = secretList.ToArray();
                         break;
                     case "ResourceOwnerPasswordAndClientCredentials":
                         client.AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials;

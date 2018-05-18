@@ -13,6 +13,7 @@ using IdentityCenter.Models;
 using IdentityCenter.Services;
 using System.Reflection;
 using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.Validation;
 
 namespace IdentityCenter
 {
@@ -44,7 +45,7 @@ namespace IdentityCenter
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddMvc();
 
             // configure identity server with in-memory stores, keys, clients and scopes
